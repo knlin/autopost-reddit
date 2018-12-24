@@ -1,0 +1,25 @@
+{
+  "name": "autopost-reddit",
+  "version": "1.0.0",
+  "description": "Automatically find the best time to post on Reddit.",
+  "main": "./src/server/server.js",
+  "scripts": {
+    "start": "node ./src/server/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/knlin/autopost-reddit.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/knlin/autopost-reddit/issues"
+  },
+  "homepage": "https://github.com/knlin/autopost-reddit#readme",
+  "dependencies": {
+    "@google-cloud/bigquery": "^2.0.5",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4"
+  }
+}
