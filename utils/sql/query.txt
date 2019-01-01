@@ -1,0 +1,19 @@
+SELECT
+  dow
+  , bucket
+  , COUNT(*) as freq
+FROM (
+  SELECT
+    *
+    , EXTRACT(DAYOFWEEK from timestamp) as dow
+    , CASE
+        WHEN EXTRACT(MINUTE from timestamp) < 15 THEN EXTRACT(HOUR from timestamp)
+        WHEN EXTRACT(MINUTE from timestamp) >= 15 AND EXTRACT(MINUTE from timestamp) < 45 THEN EXTRACT(HOUR from timestamp) + 0.5
+          ELSE EXTRACT(HOUR from timestamp) + 1
+      END as bucket
+  FROM (
+{subquery}
+  )
+)
+GROUP BY dow, bucket
+ORDER BY dow asc, bucket asc

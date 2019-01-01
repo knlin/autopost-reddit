@@ -2,9 +2,9 @@
   "name": "autopost-reddit",
   "version": "1.0.0",
   "description": "Automatically find the best time to post on Reddit.",
-  "main": "./src/server/server.js",
+  "main": "./server.js",
   "scripts": {
-    "start": "node ./src/server/server.js",
+    "start": "node ./server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
