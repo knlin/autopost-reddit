@@ -13,15 +13,33 @@ function sanitizeInput(subreddit, numMonths, minscore) {
   return [subreddit, numMonths, minscore];
 }
 
+function splitRows(rows) {
+  results = {
+    1: [],
+    2: [],
+    3: [],
+    4: [],
+    5: [],
+    6: [],
+    7: []
+  }
+  for (let dow = 1; dow <= 7; dow++) {
+    for (let i = 0; i < 48; i++) {
+      results[dow].push(rows[(dow-1)*48 + i]['freq']);
+    }
+  }
+  return results;
+}
+
 /**
  * Query Google BigQuery public Reddit post database and return array of
  * results. Relies on query-builder.js and SQL query templates in utils/sql.
- * 
+ *
  * @param {String}  subreddit Subreddit to query.
  * @param {Int}     numMonths Number of months to include, starting from most
  *                            recent. Each month uses ~350 MB of data.
  * @param {Int}     minscore  Minimum score a post must have to be included.
- * 
+ *
  * @returns {Array} Data to visualize. Each row contains post counts aggregated
  *                  at each half hour:
  *                  'dow':    Day of the week (1 = Sunday, 7 = Saturday).
@@ -37,6 +55,7 @@ async function queryBQ(subreddit, numMonths=2, minscore=100) {
     location: 'US',
   };
   const [rows] = await bigquery.query(options);
+  results = splitRows(rows);
 
   console.log('Query results:');
   rows.forEach(row => {
@@ -45,9 +64,10 @@ async function queryBQ(subreddit, numMonths=2, minscore=100) {
     const freq = row['freq'];
     console.log(`${dow}, ${bucket}: ${freq} posts`);
   });
-  return rows;
+  return results;
 }
 
 module.exports = {
   queryBQ: queryBQ,
+  splitRows: splitRows
 }

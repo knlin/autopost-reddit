@@ -1,5 +1,5 @@
-      SELECT
-        score
-        , DATETIME(TIMESTAMP_SECONDS(created_utc), '{timezone}') as timestamp
-      FROM `fh-bigquery.reddit_posts.{yyyy_mm}`
-      WHERE LOWER(subreddit) = '{subreddit}' AND score >= {scoreThreshold}
+        SELECT
+          score
+          , DATETIME(TIMESTAMP_SECONDS(created_utc), '{timezone}') as timestamp
+        FROM `fh-bigquery.reddit_posts.{yyyy_mm}`
+        WHERE LOWER(subreddit) = '{subreddit}' AND score >= {scoreThreshold}
