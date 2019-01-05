@@ -19,11 +19,6 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false });
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-// main route
-app.get('/', (req, res) => {
-  res.send('Hello from App Engine!');
-});
-
 // query route
 app.get('/api/query', jsonParser, function (req, res) {
   if (!req.query) {
@@ -50,6 +45,11 @@ app.get('/api/query', jsonParser, function (req, res) {
 app.get('/api/test', (req, res) => {
   res.send('Hello from Express!');
   console.log("Hello from Express!");
+});
+
+// main route
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 });
 
 // 404 route
