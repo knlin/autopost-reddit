@@ -11,15 +11,17 @@ import './App.css';
 class App extends Component {
   render() {
     const App = () => (
-      <div>
+      <>
+      <div id="site-header">
         <h1>Autopost for Reddit</h1>
-        <div id="app">
-          <Switch>
-            <Route path='/' component={Home} />
-            {/* <Route path='/query' component={QueryResults} /> */}
-          </Switch>
-        </div>
       </div>
+      <div id="app">
+        <Switch>
+          <Route path='/' component={Home} />
+          {/* <Route path='/query' component={QueryResults} /> */}
+        </Switch>
+      </div>
+      </>
     );
     return (
       <Switch>

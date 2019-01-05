@@ -1,7 +1,7 @@
 const express      = require('express');
 const path         = require('path');
 const bodyParser   = require('body-parser');
-const QuerySender  = require('./utils/query-sender.js');
+const QuerySender  = require('./query-sender.js');
 
 const EXAMPLE_RESULTS = require('./utils/sql/example_results.json');
 
@@ -33,7 +33,7 @@ app.get('/api/query', jsonParser, function (req, res) {
   }
   console.log(req.query);
   QuerySender
-    .queryBQ(req.query.subreddit, req.query.months, req.query.score)
+    .queryBQ(req.query.subreddit, req.query.months, req.query.score, req.query.timezone)
     .then(rows => {
       res.send(rows);  // TODO: send rows to React frontend to render visualization
       console.log("Sent JSON array to client.")

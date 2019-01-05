@@ -3,18 +3,11 @@ const path = require('path');
 
 const YYYY = 2018;
 const MM = 10;
-const QUERYFILE = './sql/query.txt';
-const SUBQUERYFILE = './sql/subquery.txt';
+const QUERYFILE = './utils/sql/query.txt';
+const SUBQUERYFILE = './utils/sql/subquery.txt';
 
 function strPad(n) {
   return String("00" + n).slice(-2);
-}
-
-function timezone() {
-  var timezone = new Date().getTimezoneOffset() / 60;
-  timezone = timezone >= 0 ? '+' + timezone : '' + timezone;
-console.log(timezone);
-  return timezone;
 }
 
 // Return array of yyyy_mm strings.
@@ -42,7 +35,7 @@ function readSQL(filepath) {
 }
 
 // Return full query string from UNION ALL of monthly subqueries.
-function buildQuery(subreddit, numMonths, minscore) {
+function buildQuery(subreddit, numMonths, minscore, timezone) {
   query = readSQL(QUERYFILE);
   subquery = readSQL(SUBQUERYFILE);
 
@@ -62,7 +55,7 @@ function buildQuery(subreddit, numMonths, minscore) {
     console.log(query.replace('{subquery}', temp));
     return query.replace('{subquery}', temp);
   }
-  return _buildQuery(query, subquery, timezone());
+  return _buildQuery(query, subquery, timezone);
 }
 
 module.exports = {

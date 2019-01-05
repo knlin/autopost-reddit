@@ -6,11 +6,11 @@ const bigquery = new BigQuery({
   projectId: projectId,
 });
 
-function sanitizeInput(subreddit, numMonths, minscore) {
+function sanitizeInput(subreddit, numMonths, minscore, timezone) {
   subreddit = subreddit.toLowerCase();
   numMonths = parseInt(numMonths, 10);
   minscore = parseInt(minscore, 10);
-  return [subreddit, numMonths, minscore];
+  return [subreddit, numMonths, minscore, timezone];
 }
 
 function splitRows(rows) {
@@ -48,8 +48,8 @@ function splitRows(rows) {
  *                  'freq':   Number of posts in the bucket with at least
  *                            `minscore` upvotes.
  */
-async function queryBQ(subreddit, numMonths=2, minscore=100) {
-  const sqlQuery = QueryBuilder.buildQuery(...sanitizeInput(subreddit, numMonths, minscore));
+async function queryBQ(subreddit, numMonths=2, minscore=100, timezone='-5') {
+  const sqlQuery = QueryBuilder.buildQuery(...sanitizeInput(subreddit, numMonths, minscore, timezone));
   const options = {
     query: sqlQuery,
     location: 'US',

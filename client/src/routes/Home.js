@@ -6,6 +6,15 @@ import QueryForm from './QueryForm';
 import QueryResults from './QueryResults';
 import Heatmap from './Heatmap';
 
+
+// Return the local (client browser) timezone.
+function getTimezone() {
+  var timezone = new Date().getTimezoneOffset() / 60;
+  timezone = timezone <= 0 ? '+' + Math.abs(timezone) : '-' + Math.abs(timezone);
+  console.log('Browser timezone: ' + timezone);
+  return timezone;
+}
+
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -14,7 +23,8 @@ class Home extends Component {
       'subreddit': query.subreddit || '',
       'months': query.months || 2,
       'score': query.score || 100,
-      'visdata': (this.props.location.state && this.props.location.state.visdata) || []
+      'visdata': (this.props.location.state && this.props.location.state.visdata) || [],
+      'timezone': getTimezone()
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -52,14 +62,15 @@ class Home extends Component {
   // 'visdata' state variable, and change the URL to reflect the new query.
   getQueryResults = () => {
     const queryObj = (({ subreddit, months, score }) => ({ subreddit, months, score }))(this.state);
-    const query = queryString.stringify(queryObj);
-    fetch('/api/query?' + query)
+    const serverQuery = queryString.stringify(Object.assign({ timezone: this.state.timezone }, queryObj));
+    const clientQuery = queryString.stringify(queryObj);
+    fetch('/api/query?' + serverQuery)
     .then(res => res.json())
     .then(response => {
       // set URL to '/query?...' and save BigQuery query response in visdata for QueryResults to visualize
       this.props.history.push({
         pathname: '/query',
-        search: query,
+        search: clientQuery,
         state: { 'visdata': response }
       });
       console.log(JSON.stringify(response));

@@ -33,10 +33,10 @@ class QueryForm extends Component {
       <>
         <form className="queryForm" onSubmit={this.handleSubmit}>
           <label>Subreddit:</label>
-          <input type="text" name="subreddit" value={this.props.subreddit} onChange={this.handleChange} required pattern="[A-Za-z0-9_]{3,21}" maxlength="21" />
+          <input className="queryFormInput" type="text" name="subreddit" value={this.props.subreddit} onChange={this.handleChange} required pattern="[A-Za-z0-9_]{3,21}" maxlength="21" />
           <label>Minimum score:</label>
-          <input type="number" name="score" value={this.props.score} onChange={this.handleChange} required />
-          <input type="submit" value="Submit" />
+          <input className="queryFormInput" type="number" name="score" value={this.props.score} onChange={this.handleChange} required />
+          <input className="queryFormSubmit" type="submit" value="Submit" />
         </form>
       </>
     );
