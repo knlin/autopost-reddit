@@ -25,7 +25,7 @@ class Heatmap extends Component {
 
   render() {
     return (
-      <div>
+      <div className="heatmap">
         <h2>Heatmap</h2>
         <table>
           <tr><th scope="row">Sunday</th>   {this.props.data[1].map(freq => <td>{freq}</td>)}</tr>
