@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Link } from 'react-router-dom';
 
 import Home from './routes/Home';
 import QueryForm from './routes/QueryForm';
 import QueryResults from './routes/QueryResults';
+import NoMatch from './routes/NoMatch';
 
 import logo from './logo.svg';
 import './App.css';
@@ -13,11 +14,13 @@ class App extends Component {
     const App = () => (
       <>
       <div id="site-header">
-        <h1>Autopost for Reddit</h1>
+        <Link to="/" className="site-header-link">Autopost for Reddit</Link>
       </div>
       <div id="app">
         <Switch>
-          <Route path='/' component={Home} />
+          <Route exact path='/' component={Home} />
+          <Route path='/query' component={Home} />
+          <Route component={NoMatch} />
           {/* <Route path='/query' component={QueryResults} /> */}
         </Switch>
       </div>

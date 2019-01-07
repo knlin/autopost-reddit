@@ -2,10 +2,15 @@ runtime: nodejs10
 
 handlers:
   - url: /favicon\.ico
-    static_files: client/build/public/favicon.ico
+    static_files: client/build/favicon.ico
+    upload: client/build/favicon.ico
 
   - url: /static
-    static_dir: client/build/public
+    static_dir: client/build/static
+
+  - url: /
+    static_files: client/build/index.html
+    upload: client/build/index.html
 
   - url: /.*
     secure: always

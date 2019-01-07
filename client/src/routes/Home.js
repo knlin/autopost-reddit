@@ -34,6 +34,9 @@ class Home extends Component {
   componentDidMount() {
     console.log('Home mounted:');
     console.log(this.state);
+    console.log('Fetching /api/test:');
+    fetch('api/test')
+    .then(res => console.log(res.text()));
   }
 
   componentWillUnmount() {
@@ -64,6 +67,7 @@ class Home extends Component {
     const queryObj = (({ subreddit, months, score }) => ({ subreddit, months, score }))(this.state);
     const serverQuery = queryString.stringify(Object.assign({ timezone: this.state.timezone }, queryObj));
     const clientQuery = queryString.stringify(queryObj);
+    console.log('Fetching from /api/query?' + serverQuery);
     fetch('/api/query?' + serverQuery)
     .then(res => res.json())
     .then(response => {
@@ -75,7 +79,8 @@ class Home extends Component {
       });
       console.log(JSON.stringify(response));
       console.log('URL changed.');
-    });
+    })
+    .catch(err => console.log("Error: " + err));
   }
 
   render() {

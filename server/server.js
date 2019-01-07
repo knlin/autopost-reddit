@@ -16,9 +16,6 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 // app.use('/static', express.static('public'));
 
-// Serve the static files from the React app
-app.use(express.static(path.join(__dirname, 'client/build')));
-
 // query route
 app.get('/api/query', jsonParser, function (req, res) {
   if (!req.query) {
@@ -43,24 +40,28 @@ app.get('/api/query', jsonParser, function (req, res) {
 
 // test route
 app.get('/api/test', (req, res) => {
-  res.send('Hello from Express!');
+  res.send('Running on port: ' + PORT);
   console.log("Hello from Express!");
 });
 
+// // 404 route
+// app.use(function (req, res, next) {
+//   res.status(404).send("This isn't the page you're looking for.")
+// });
+
+// // error route
+// app.use(function(err, req, res, next) {
+//   console.error(err.stack);
+//   res.status(500).send('Oops, something broke!');
+// });
+
+// Serve the static files from the React app
+app.use(express.static(path.join(__dirname, '../client/build/static')));
+
 // main route
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-});
-
-// 404 route
-app.use(function (req, res, next) {
-  res.status(404).send("This isn't the page you're looking for.")
-});
-
-// error route
-app.use(function(err, req, res, next) {
-  console.error(err.stack);
-  res.status(500).send('Oops, something broke!');
+app.use('*', (req, res) => {
+  console.log(path.join(__dirname, '../client/build', 'index.html'));
+  res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
 });
 
 // Listen to the App Engine-specified port, or 5000 otherwise
